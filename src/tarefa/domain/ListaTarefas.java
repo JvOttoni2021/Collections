@@ -1,4 +1,4 @@
-package tarefa.src;
+package tarefa.domain;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,10 +12,13 @@ public class ListaTarefas {
     }
 
     public void adicionarTarefa(String descricao) {
-        this.lista.add(criarTarefa(descricao));
+        this.adicionarTarefa(descricao, 0);
     }
 
-    public void adicionarTarefa(String descricao, int prioridade) {
+    public void adicionarTarefa(String descricao, int prioridade) throws IllegalArgumentException {
+        if (!(this.obterTarefaPorDescricao(descricao) == null))
+            throw new IllegalArgumentException("Já existe uma tarefa com a descrição informada");
+
         this.lista.add(criarTarefa(descricao, prioridade));
         if (prioridade > 0) { this.ordenarPorPrioridade(); }
     }
@@ -41,10 +44,6 @@ public class ListaTarefas {
                 .stream()
                 .filter(x -> x.getDescricao().equalsIgnoreCase(descricao))
                 .findFirst().orElse(null);
-    }
-
-    private Tarefa criarTarefa(String descricao) {
-        return new Tarefa(descricao);
     }
 
     private Tarefa criarTarefa(String descricao, int prioridade) {

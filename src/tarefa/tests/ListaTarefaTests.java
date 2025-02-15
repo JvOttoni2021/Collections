@@ -4,8 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-import tarefa.src.ListaTarefas;
-import tarefa.src.Tarefa;
+import tarefa.domain.ListaTarefas;
+import tarefa.domain.Tarefa;
 
 import java.util.List;
 
@@ -65,6 +65,17 @@ public class ListaTarefaTests {
         listaTarefas.adicionarTarefa(tarefaSemPrioridadeDois, 0);
 
         assertEquals(tarefaSemPrioridade, listaTarefas.obterDescricoesTarefas().get(0));
+    }
+
+    @Test
+    @DisplayName("Adicionar tarefa com descrição já existente deve lançar exception")
+    void LancaExceptionSeIncluirTarefaDuplicada() {
+        String descricaoTeste = "Descricao teste";
+        listaTarefas.adicionarTarefa(descricaoTeste);
+
+        assertThrows(
+                IllegalArgumentException.class, () -> listaTarefas.adicionarTarefa(descricaoTeste)
+        );
     }
 
     @Test

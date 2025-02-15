@@ -1,4 +1,4 @@
-package tarefa.src;
+package tarefa.domain;
 
 public class Tarefa {
     private final String descricao;
